@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Date Girl Compatibility</title>
+<style>
+	body{
+	  font-family: Arial;
+	  background-image: url("date_bg.png");
+	}
+	.content {
+	  width: 100%;
+	}
+
+	.left {
+	  width: 50%;
+	  float: left;
+	}
+
+	.right {
+	  width: 50%;
+	  float: left;
+	  overflow: hidden;
+	  overflow-y: scroll;
+	}
+	textarea {
+		resize: none;
+	}	
+</style>
+</head>
+<body>
+
+<center><h1>Date Girl Compatibility Generator</h1></center>
+
+<div class="left">
+<!-- Text box you wanna recreate -->
+<p><div id="duplicatePage0">
+<!--PageNumber-->
+<h3><span/>Page 0</span></h3>	
+		
+<!--Dialogue Type-->
+<label id="chat_type">What happens after?</label> 	
+<select class="chatType" id="chatType">
+	<option value="1">Select answers</option>
+	<option value="2">Go to dialouge</option>
+	<option value="3">End dialouge</option>
+</select><br/><br/>
+
+<!--Left Character-->
+<b>Left character</b></br>
+<!--Adopt Colors-->		
+<label for="adoptLeft">Adopt Color Alt</label><input type="checkbox" class="adoptLeft" name="adoptLeft" checked><br/>
+<!--Strip number-->
+<label for="stripLeft">Portrait Sprite Index:</label><input type="number" class="stripLeft" name="stripLeft" min="0" step="1" value="0" size="3"><br/>
+<!--Uses Custom-->		
+<label for="customLeft">Uses Custom Sprite?</label><input type="checkbox" class="customLeft" name="customLeft" checked><br/><br/>
+
+
+<!--Right Character-->
+<b>Right character</b></br>
+<!--Adopt Colors-->		
+<label for="adoptRight">Adopt Color Alt</label><input type="checkbox" class="adoptRight" name="adoptRight" checked><br/>
+<!--Strip number-->
+<label for="stripRight">Portrait Sprite Index:</label><input type="number" class="stripRight" name="stripRight" min="0" step="1" value="0" size="3"><br/>
+<!--Uses Custom-->		
+<label for="customRight">Uses Custom Sprite?</label><input type="checkbox" class="customRight" name="customRight" checked><br/>
+
+<!--Insert Dialouge and Options-->
+<br/>
+<b>Insert dialogue here:</b><br/>
+<input type="text" class="pgDiag1" name="pgDiag1" size="60" maxlength="60"><br/>
+<input type="text" class="pgDiag2" name="pgDiag2" size="60" maxlength="60"><br/>
+<input type="text" class="pgDiag3" name="pgDiag3" size="60" maxlength="60"><br/>
+<br/>
+
+<b>Insert options here and what page they go to:</b><br/>
+<input type="text" class="pgOpt1" name="pgOpt1" size="60" maxlength="60"><input type="number" class="ansOpt1" min="0" step="1" value="0" size="3"><br/>
+<input type="text" class="pgOpt2" name="pgOpt2" size="60" maxlength="60"><input type="number" class="ansOpt2" min="0" step="1" value="0" size="3"><br/>
+<input type="text" class="pgOpt3" name="pgOpt3" size="60" maxlength="60"><input type="number" class="ansOpt3" min="0" step="1" value="0" size="3"><br/>
+<br/>
+
+<!--What page to go to-->
+<label for="pgDest">Go to page:</label><input type="number" class="pgDest" name="pgDest" min="0" step="1" value="0" size="3"><br/>
+</div>
+</p>
+
+</div>
+
+<div class="right">
+<button type="button" id="duplicate" onclick="duplicate()">Create new page</button> 
+<button type="button" id="generate" onclick="generate()">Generate Code</button> 
+<h2>Copy and paste this into init.gml!</h2>
+<textarea id="dataBox" name="dataBox" rows="40" cols="100">
+</textarea>
+</div>
+
+<script language="javascript" type="text/javascript">
+var i = 0;
+
+function duplicate() {
+    var original = document.getElementById('duplicatePage' + i);
+    var clone = original.cloneNode(true); // "deep" clone
+	clone.id = "duplicatePage" + ++i; // there can only be one element with an ID
+    original.parentNode.appendChild(clone);
+	document.getElementsByTagName('span')[i].innerHTML = "Page " + i;
+}
+
+//If anyone sees this script, please forgive me.
+function generate(){
+
+var codeText = 
+`//Date Girl Support. Generated using McDucky's Date Girl Generator! 
+Chatting = true;
+DG_portrait = sprite_get("DG_portrait");
+var DG_page = 0;
+`;
+
+//Check every page generated so far!
+for (var pg = -1; pg < i; pg ++) 
+{
+//Get current page.
+var curPage = document.getElementById("duplicatePage" + (pg+1));
+
+var chatType = curPage.getElementsByClassName("chatType")[0].value;
+var adptL = "false";
+var adptR = "false";
+var custL = "false";
+var custR = "false";
+var diag1 = curPage.getElementsByClassName("pgDiag1")[0].value;
+var diag2 = curPage.getElementsByClassName("pgDiag2")[0].value;
+var diag3 = curPage.getElementsByClassName("pgDiag3")[0].value;
+var opt1 = curPage.getElementsByClassName("pgOpt1")[0].value;
+var opt2 = curPage.getElementsByClassName("pgOpt2")[0].value;
+var opt3 = curPage.getElementsByClassName("pgOpt3")[0].value;
+var nxtPg = curPage.getElementsByClassName("pgDest")[0].value;
+var ans1 = curPage.getElementsByClassName("ansOpt1")[0].value;
+var ans2 = curPage.getElementsByClassName("ansOpt2")[0].value;
+var ans3 = curPage.getElementsByClassName("ansOpt3")[0].value;
+
+if(curPage.getElementsByClassName("adoptLeft")[0].checked)
+	adptL = "true";
+if(curPage.getElementsByClassName("adoptRight")[0].checked)
+	adptR = "true";
+if(curPage.getElementsByClassName("customLeft")[0].checked)
+	custL = "true";
+if(curPage.getElementsByClassName("customRight")[0].checked)
+	custR = "true";
+
+var stripL = curPage.getElementsByClassName("stripLeft")[0].value;
+var stripR = curPage.getElementsByClassName("stripRight")[0].value;
+
+codeText += `
+//Page ` + (pg+1) + `
+DG_page = ` + (pg+1) + `;
+DG_chat_type[DG_page] = ` + chatType + `;
+
+DG_adopts_color_left[DG_page] = ` + adptL + `;
+DG_adopts_color_right[DG_page] = ` + adptR + `;
+
+DG_left_strip[DG_page] = ` + stripL + `;
+DG_right_strip[DG_page] = ` + stripR + `;
+
+DG_custom_left_portrait[DG_page] = ` + custL + `;
+DG_custom_right_portrait[DG_page] = ` + custR + `;
+
+DG_dialouge[DG_page] = "` + diag1 + `
+			` + diag2 + `
+			` + diag3 + `"
+`;
+
+if(chatType == 1){
+codeText += `
+DG_options[DG_page] = "` + opt1 + `
+		` + opt2 + `
+			` + opt3 + `"
+			
+DG_answers[DG_page] = [` + ans1 + `,` + ans2 + `,` + ans3 + `];
+`;
+}else if(chatType == 2){
+codeText += `
+DG_nextindex[DG_page] = ` + nxtPg + `;
+`;
+}
+
+}
+
+//Put out the text for the user to paste ^w^
+document.getElementById("dataBox").value = codeText;
+
+}
+</script>
+
+</html>
