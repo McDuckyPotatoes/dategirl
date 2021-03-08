@@ -177,7 +177,7 @@ var adptL = "false";
 var adptR = "false";
 var custL = "false";
 var custR = "false";
-var rSpeaking = false;
+var rSpeaking = "false";
 var diag1 = curPage.getElementsByClassName("pgDiag1")[0].value;
 var diag2 = curPage.getElementsByClassName("pgDiag2")[0].value;
 var diag3 = curPage.getElementsByClassName("pgDiag3")[0].value;
@@ -201,7 +201,7 @@ if(curPage.getElementsByClassName("customLeft")[0].checked)
 if(curPage.getElementsByClassName("customRight")[0].checked)
 	custR = "true";
 if(curPage.getElementsByClassName("talkRight")[0].checked)
-	rSpeaking = true;
+	rSpeaking = "true";
 	
 var stripL = curPage.getElementsByClassName("stripLeft")[0].value;
 var stripR = curPage.getElementsByClassName("stripRight")[0].value;
@@ -220,11 +220,13 @@ DG_right_strip[DG_page] = ` + stripR + `;
 DG_custom_left_portrait[DG_page] = ` + custL + `;
 DG_custom_right_portrait[DG_page] = ` + custR + `;
 
-DG_dialouge[DG_page] = "` + diag1 + `
+DG_right_speaker[DG_page] = ` + rSpeaking + `;
+
+DG_dialogue[DG_page] = "` + diag1 + `
 			` + diag2 + `
 			` + diag3 + `"
 `;
-if(rSpeaking){
+if(rSpeaking == "true"){
 codeText += `
 DG_dialogue_right[DG_page] = "` + rspeak1 + `
 			      ` + rspeak2 + `
