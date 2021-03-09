@@ -222,25 +222,30 @@ DG_custom_right_portrait[DG_page] = ` + custR + `;
 
 DG_right_speaker[DG_page] = ` + rSpeaking + `;
 
-DG_dialogue[DG_page] = "` + diag1 + `
-			` + diag2 + `
-			` + diag3 + `"
+DG_dialogue[DG_page] = 
+"` + diag1 + `
+` + diag2 + `
+` + diag3 + `"
 `;
 if(rSpeaking == "true"){
 codeText += `
-DG_dialogue_right[DG_page] = "` + rspeak1 + `
-			      ` + rspeak2 + `
-			      ` + rspeak3 + `"`
+DG_dialogue_right[DG_page] = 
+"` + rspeak1 + `
+` + rspeak2 + `
+` + rspeak3 + `"`
 ;
 }
 if(chatType == 1){
 codeText += `
-DG_options[DG_page] = "` + opt1 + `
-		       ` + opt2 + `
-		       ` + opt3 + `"
+DG_options[DG_page] = 
+"` + opt1 + `
+` + opt2 + `
+` + opt3 + `"
 			
 DG_answers[DG_page] = [` + ans1 + `,` + ans2 + `,` + ans3 + `];
+
 `;
+
 }else if(chatType == 2){
 codeText += `
 DG_nextindex[DG_page] = ` + nxtPg + `;
