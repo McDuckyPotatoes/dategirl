@@ -44,8 +44,9 @@
 <!-- Text box you wanna recreate -->
 <p><div id="duplicatePage0">
 <!--PageNumber-->
-<h3><span class="pageNo">Page 0</span></h3>	
-		
+<h3><button onclick="pageDisplays(this)">Show</button> <span class="pageNo">Page 0</span> - <input type="text" class="pgComment" name="pgComment" size="20"></h3>	
+
+<div class="hideThis">
 <!--Dialogue Type-->
 <label id="chat_type">What happens after?</label> 	
 <select class="chatType" id="chatType" onchange="chatSelect(this)" sele>
@@ -101,7 +102,7 @@
 
 <!--What page to go to-->
 <span class="destBlock"><label for="pgDest">Go to page:</label><input type="number" class="pgDest" name="pgDest" min="0" step="1" value="0" size="3"></span><br/>
-</div>
+</div></div>
 </p>
 
 </div>
@@ -115,6 +116,7 @@
 
 <br/><br/>
 <b> Changelog </b><br/>
+03/11/21: Lets you comment name on pages to keep track of it better and show/hide pages for easier access!<br/>
 03/08/21: Made unnecessary options disappear (still a bit buggy) and right speaker dialogue added!<br/>
 03/07/21: It has existed.<br/>
 </div>
@@ -156,6 +158,18 @@ function duplicate() {
 	document.getElementsByClassName('pageNo')[i].innerHTML = "Page " + i;
 }
 
+//Hide this page please lmao
+function pageDisplays(sel){
+	var pageShown = sel.parentElement.parentElement.getElementsByClassName("hideThis")[0];
+	if(pageShown.style.display == "none"){
+		sel.innerHTML = "Show";
+		pageShown.style.display = "block";
+	}else{
+		sel.innerHTML = "Hide";
+		pageShown.style.display = "none";
+	}
+}
+
 //If anyone sees this script, please forgive me.
 function generate(){
 
@@ -172,6 +186,7 @@ for (var pg = -1; pg < i; pg ++)
 //Get current page.
 var curPage = document.getElementById("duplicatePage" + (pg+1));
 
+var pgComment = curPage.getElementsByClassName("pgComment")[0].value;
 var chatType = curPage.getElementsByClassName("chatType")[0].value;
 var adptL = "false";
 var adptR = "false";
@@ -207,7 +222,8 @@ var stripL = curPage.getElementsByClassName("stripLeft")[0].value;
 var stripR = curPage.getElementsByClassName("stripRight")[0].value;
 
 codeText += `
-//Page ` + (pg+1) + `
+//Page ` + (pg+1) + ` - ` + pgComment + `
+---------------------------------------------------
 DG_page = ` + (pg+1) + `;
 DG_chat_type[DG_page] = ` + chatType + `;
 
